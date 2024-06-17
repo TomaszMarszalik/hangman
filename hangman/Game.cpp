@@ -1,13 +1,18 @@
 #include "Game.h"
-#include <cstdlib>
-#include <ctime>
+
+#include <iostream>
+
+constexpr const char* WORDS_FILE = "words.txt";
+
+Game::Game() :
+	m_word_generator(WORDS_FILE)
+{
+}
 
 void Game::OnInit()
 {
 	m_guessedLetters.clear();
-	srand(std::time(NULL));
-	int randomIndex = rand() % m_wordsPool.size();
-	m_word = m_wordsPool[randomIndex];
+	m_word = m_word_generator.get_random_word();
 }
 
 void Game::OnInput()

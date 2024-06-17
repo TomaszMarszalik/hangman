@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "WordsGenerator.h"
 
 class Game
 {
@@ -13,6 +14,8 @@ class Game
 	};
 
 public:
+	Game();
+
 	void OnInit();
 	void OnInput();
 	bool OnUpdate(float deltaTime);
@@ -21,8 +24,7 @@ public:
 
 private:
 	std::string m_word;
-	std::vector<std::string> m_wordsPool = { "kolor", "silnik", "wzorzec", "silnie", "kanapka" };
 	std::vector<bool> m_guessedLetters;
 	GameState m_gameState = GameState::START;
-
+	WordsGenerator m_word_generator;
 };

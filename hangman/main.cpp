@@ -1,5 +1,7 @@
-#include <iostream>
 #include "Game.h"
+
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -28,6 +30,7 @@ int main()
 
 void Initialize()
 {
+	srand(std::time(NULL));
 	g_game.OnInit();
 }
 
