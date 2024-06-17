@@ -12,12 +12,12 @@ namespace
 		char choice = ' ';
 		std::cout << "Enter letter (a-z)" << std::endl;
 		std::cin >> choice;
-		//do 
-		//{
-
-		//	std::cout << "Invalid character or it was already entered, try again" << std::endl;
-		//} while ((not ((choice >= 'a' and choice <= 'z') or (choice >= 'A' and choice <= 'Z'))) and
-		//	(std::find(guessed_letters.begin(), guessed_letters.end(), choice) != guessed_letters.end()));
+		while (not (((choice >= 'a' and choice <= 'z') or (choice >= 'A' and choice <= 'Z')) and
+			(std::find(guessed_letters.begin(), guessed_letters.end(), std::toupper(choice)) == guessed_letters.end())))
+		{
+			std::cout << "Invalid character or it was already entered, try again" << std::endl;
+			std::cin >> choice;
+		} 
 
 		return choice;
 	}
@@ -44,7 +44,7 @@ void Game::OnInit()
 
 void Game::OnInput()
 {
-	auto m_selected_letter = get_input(m_guessed_letters);
+	m_selected_letter = get_input(m_guessed_letters);
 }
 
 bool Game::OnUpdate(float deltaTime)
@@ -52,7 +52,7 @@ bool Game::OnUpdate(float deltaTime)
 	bool found = false;
 	for (int i = 0; i < m_word.length(); ++i)
 	{
-		if (m_word[i] == m_selected_letter)
+		if (std::toupper(m_word[i]) == std::toupper(m_selected_letter))
 		{
 			found = true;
 			m_guessed_letters[i] = std::toupper(m_selected_letter);
@@ -64,7 +64,7 @@ bool Game::OnUpdate(float deltaTime)
 		}
 	}
 	
-	if ((not found) and (++m_errors_counter >= MAX_ERRORS_COUNT))
+ 	if ((not found) and (++m_errors_counter >= MAX_ERRORS_COUNT))
 	{
 		m_game_state = GameState::FINISHED;
 		return false;
@@ -75,7 +75,7 @@ bool Game::OnUpdate(float deltaTime)
 
 void Game::OnRender()
 {
-	for (int i = 0; m_word.length(); ++i)
+	for (int i = 0; i < m_word.length(); ++i)
 	{
 		std::cout << m_guessed_letters[i] << " ";
 	}
@@ -92,6 +92,10 @@ void Game::OnRender()
 			std::cout << "You've lost!" << std::endl;
 		}
 		std::cout << "Searched word: " << m_word;
+	}
+	else
+	{
+		std::cout << "No of failed guesses: " << m_errors_counter << std::endl;
 	}
 }
 
