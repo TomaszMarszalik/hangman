@@ -12,7 +12,7 @@ void Render();
 void Shutdown();
 
 
-bool g_exitGame = false;
+bool g_exitGame = true;
 Game g_game;
 
 int main()
@@ -36,7 +36,7 @@ void Initialize()
 
 void GetInput()
 {
-	// g_game
+	g_game.OnInput();
 }
 
 void Update(float deltaTime)

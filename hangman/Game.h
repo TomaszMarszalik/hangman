@@ -8,9 +8,9 @@ class Game
 {
 	enum class GameState
 	{
-		START,
-		UPDATE,
-		FINISH
+		STARTED,
+		UPDATED,
+		FINISHED
 	};
 
 public:
@@ -24,7 +24,10 @@ public:
 
 private:
 	std::string m_word;
-	std::vector<bool> m_guessedLetters;
-	GameState m_gameState = GameState::START;
+	char m_selected_letter;
+	std::vector<char> m_guessed_letters;
+	GameState m_game_state = GameState::STARTED;
 	WordsGenerator m_word_generator;
+	size_t m_errors_counter = 0;
+	size_t m_guessed_counter = 0;
 };
