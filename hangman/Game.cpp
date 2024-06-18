@@ -3,7 +3,7 @@
 #include <iostream>
 
 constexpr const char* WORDS_FILE = "words.txt";
-constexpr size_t MAX_ERRORS_COUNT = 5;
+constexpr size_t MAX_ERRORS_COUNT = 6;
 
 namespace
 {
@@ -14,12 +14,27 @@ namespace
 		std::cin >> choice;
 		while (not (((choice >= 'a' and choice <= 'z') or (choice >= 'A' and choice <= 'Z')) and
 			(std::find(guessed_letters.begin(), guessed_letters.end(), std::toupper(choice)) == guessed_letters.end())))
-		{
+		{ // if the user repeat incorrect letters the error count will increase
 			std::cout << "Invalid character or it was already entered, try again" << std::endl;
 			std::cin >> choice;
 		} 
 
 		return choice;
+	}
+
+	void render(size_t no_of_errors)
+	{
+		system("cls");
+		switch (no_of_errors)
+		{
+		case 1: std::cout << "|" << std::endl << "|" << std::endl << "|" << std::endl << "|" << std::endl; break;
+		case 2: std::cout << "----" << std::endl << "|" << std::endl << "|" << std::endl << "|" << std::endl << "|" << std::endl; break;
+		case 3: std::cout << "----" << std::endl << "|/" << std::endl << "|" << std::endl << "|" << std::endl << "|" << std::endl; break;
+		case 4: std::cout << "----" << std::endl << "|/ |" << std::endl << "|  O" << std::endl << "|" << std::endl << "|" << std::endl; break;
+		case 5: std::cout << "----" << std::endl << "|/ |" << std::endl << "| \\O/" << std::endl << "|" << std::endl << "|" << std::endl; ; break;
+		case 6: std::cout << "----" << std::endl << "|/ |" << std::endl << "| \\O/" << std::endl << "|  |" << std::endl << "| / \\" << std::endl; ; break;
+		default: break; // do nothing
+		}
 	}
 }
 
@@ -75,6 +90,7 @@ bool Game::OnUpdate(float deltaTime)
 
 void Game::OnRender()
 {
+	render(m_errors_counter);
 	for (int i = 0; i < m_word.length(); ++i)
 	{
 		std::cout << m_guessed_letters[i] << " ";
